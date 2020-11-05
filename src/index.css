@@ -1,0 +1,15 @@
+.btn,
+.jumbotron,
+.nav :hover {
+   border-radius: 0px;
+}
+
+.msg {
+   margin-top: 246px;
+}
+footer {
+   position: absolute;
+   bottom: 0;
+   right: 0px;
+   left: 0px;
+}
