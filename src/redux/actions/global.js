@@ -6,6 +6,5 @@ export const getBanquet = () => async (dispatch) => {
    if (res) {
       dispatch({ type: "BANQUET", payload: res.data });
    }
-   // console.log(res)
    return res;
 };

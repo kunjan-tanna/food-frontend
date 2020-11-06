@@ -19,7 +19,6 @@ import {
    InputGroupText,
 } from "reactstrap";
 import { connect } from "react-redux";
-
 import * as globalActions from "../../../redux/actions/global";
 import IMG from "../../../configs/imgConfig";
 import { Star, Edit, Trash2, Search, MapPin, ThumbsUp } from "react-feather";
@@ -70,7 +69,7 @@ class Home extends React.Component {
          let rowData = res.data;
          this.setState({ rowData });
       });
-      //this.getLocation();
+      this.getLocation();
       // console.log("ComponentDidMount");
       // this.props.dispatch(trackerAction.getData()).then((res) => {
       //    console.log("Tracker Data", res);
@@ -108,7 +107,6 @@ class Home extends React.Component {
                         <Row className="pt-4">
                            {this.state.rowData &&
                               this.state.rowData.map((item, index) => {
-                                 console.log("itemmm", item);
                                  return (
                                     <Col lg="4" sm="12" key={index}>
                                        <Card
@@ -147,7 +145,6 @@ class Home extends React.Component {
                                                    item.avtar
                                                 }
                                              />
-
                                              <hr />
                                              <div className="justify-content-between">
                                                 <i>Capacity:&nbsp;&nbsp;</i>
