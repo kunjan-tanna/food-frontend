@@ -29,10 +29,10 @@ class Home extends React.Component {
       this.state = {
          data: [],
          latitude: "",
+         searchVal: "",
          longtitude: "",
          rowData: [],
       };
-      // console.log("UserData", this.props);
    }
    getLocation = () => {
       if (navigator.geolocation) {
@@ -65,38 +65,42 @@ class Home extends React.Component {
       //70.4645757, 21.5134252
       const data = postion.coords.latitude;
       const abc = postion.coords.longitude;
+      this.setState({ longtitude: abc });
+      this.setState({ latitude: data });
       this.props
-         .dispatch(globalActions.getNearBanquet(abc, data))
+         .dispatch(globalActions.getNearBanquet(70.4645757, 21.5134252))
          .then((res) => {
-            console.log("data", res);
             let data = res.data;
             this.setState({ data });
          });
    };
-
+   // For Searching Value
+   updateSearchQuery = (val) => {
+      this.setState({
+         searchVal: val,
+      });
+   };
    componentDidMount = () => {
-      //this.props.dispatch(globalActions.getNearBanquet());
       this.props.dispatch(globalActions.getBanquet()).then((res) => {
          let rowData = res.data;
          this.setState({ rowData });
       });
       this.getLocation();
-      // console.log("ComponentDidMount");
-      // this.props.dispatch(trackerAction.getData()).then((res) => {
-      //    console.log("Tracker Data", res);
-      //    if (res) {
-      //       this.setState({ formData: res }); //() => {console.log();}
-      //    }
-      // });
    };
    render() {
-      console.log("dataaa", this.state.data);
       const final =
          this.state.data &&
          this.state.data.map((item) => {
             return item.banquetId;
          });
-      console.log(final);
+      let filteredData = final.filter((data) => {
+         return (
+            data.banName
+               .toLowerCase()
+               .indexOf(this.state.searchVal.toLowerCase()) !== -1
+         );
+      });
+
       return (
          <Row>
             <Col sm="12">
@@ -113,7 +117,10 @@ class Home extends React.Component {
                                  type="text"
                                  id="banquet"
                                  placeholder="Search Banquet"
-                                 //onChange={this.handleDiscount}
+                                 onChange={(e) =>
+                                    this.updateSearchQuery(e.target.value)
+                                 }
+                                 value={this.state.value}
                               />
 
                               <InputGroupAddon addonType="append">
@@ -124,10 +131,8 @@ class Home extends React.Component {
                            </InputGroup>
                         </Col>
                         <Row className="pt-4">
-                           {final >= 0
-                              ? "No such venue found near you!"
-                              : final &&
-                                final.map((item, index) => {
+                           {filteredData && filteredData.length > 0
+                              ? filteredData.map((item, index) => {
                                    return (
                                       <Col lg="4" sm="12" key={index}>
                                          <Card
@@ -189,7 +194,8 @@ class Home extends React.Component {
                                          </Card>
                                       </Col>
                                    );
-                                })}
+                                })
+                              : "No such venue found near you!"}
                         </Row>
                      </Col>
                   </CardBody>
