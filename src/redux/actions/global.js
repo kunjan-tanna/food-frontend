@@ -8,3 +8,9 @@ export const getBanquet = () => async (dispatch) => {
    }
    return res;
 };
+//get NearBY Banquet
+export const getNearBanquet = (lng, lat) => async (dispatch) => {
+   const res = await axios.get(`/location?lng=${lng}&lat=${lat}`);
+
+   return res;
+};

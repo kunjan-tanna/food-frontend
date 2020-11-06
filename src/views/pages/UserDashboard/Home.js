@@ -28,8 +28,8 @@ class Home extends React.Component {
       super(props);
       this.state = {
          data: [],
-         latitude: null,
-         longtitude: null,
+         latitude: "",
+         longtitude: "",
          rowData: [],
       };
       // console.log("UserData", this.props);
@@ -62,13 +62,20 @@ class Home extends React.Component {
       }
    };
    getCoordinates = (postion) => {
+      //70.4645757, 21.5134252
       const data = postion.coords.latitude;
       const abc = postion.coords.longitude;
-      const final = data + " , " + abc;
-      this.setState({ data: final });
+      this.props
+         .dispatch(globalActions.getNearBanquet(abc, data))
+         .then((res) => {
+            console.log("data", res);
+            let data = res.data;
+            this.setState({ data });
+         });
    };
 
    componentDidMount = () => {
+      //this.props.dispatch(globalActions.getNearBanquet());
       this.props.dispatch(globalActions.getBanquet()).then((res) => {
          let rowData = res.data;
          this.setState({ rowData });
@@ -83,7 +90,13 @@ class Home extends React.Component {
       // });
    };
    render() {
-      console.log(this.state.data);
+      console.log("dataaa", this.state.data);
+      const final =
+         this.state.data &&
+         this.state.data.map((item) => {
+            return item.banquetId;
+         });
+      console.log(final);
       return (
          <Row>
             <Col sm="12">
@@ -102,7 +115,7 @@ class Home extends React.Component {
                                  placeholder="Search Banquet"
                                  //onChange={this.handleDiscount}
                               />
-                              <p>{this.state.data}</p>
+
                               <InputGroupAddon addonType="append">
                                  <InputGroupText>
                                     <MapPin size="15" />
@@ -111,70 +124,72 @@ class Home extends React.Component {
                            </InputGroup>
                         </Col>
                         <Row className="pt-4">
-                           {this.state.rowData &&
-                              this.state.rowData.map((item, index) => {
-                                 return (
-                                    <Col lg="4" sm="12" key={index}>
-                                       <Card
-                                          body
-                                          outline
-                                          style={{
-                                             borderColor: "#333",
-                                          }}
-                                          className="mt-4"
-                                       >
-                                          <CardHeader className="justify-content-between">
-                                             <div className="card-heading">
-                                                <CardTitle>
-                                                   <h6>
-                                                      <strong>
-                                                         {item.banName}
-                                                      </strong>
-                                                   </h6>
-                                                </CardTitle>
-                                                <CardText>
-                                                   <CardLink
-                                                      href={item.locationLink}
-                                                   >
-                                                      <MapPin size="15" />{" "}
-                                                      &nbsp; Find Location
-                                                   </CardLink>
-                                                </CardText>
-                                             </div>
-                                          </CardHeader>
-                                          <CardBody>
-                                             <CardImg
-                                                variant="bottom"
-                                                src={
-                                                   IMG.baseURL +
-                                                   "/" +
-                                                   item.avtar
-                                                }
-                                             />
-                                             <hr />
-                                             <div className="justify-content-between">
-                                                <i>Capacity:&nbsp;&nbsp;</i>
-                                                <span className="text-success">
-                                                   {item.capacity}
-                                                </span>
-                                                <br />
-                                                <br />
-                                                <i>Location:&nbsp;&nbsp;</i>
-                                                <span className="text-secondary">
-                                                   {item.location}
-                                                </span>
-                                                <br />
-                                                <br />
-                                                <i>Mobile:&nbsp;&nbsp;</i>
-                                                <span className="text-info">
-                                                   {item.mobile}
-                                                </span>
-                                             </div>
-                                          </CardBody>
-                                       </Card>
-                                    </Col>
-                                 );
-                              })}
+                           {final >= 0
+                              ? "No such venue found near you!"
+                              : final &&
+                                final.map((item, index) => {
+                                   return (
+                                      <Col lg="4" sm="12" key={index}>
+                                         <Card
+                                            body
+                                            outline
+                                            style={{
+                                               borderColor: "#333",
+                                            }}
+                                            className="mt-4"
+                                         >
+                                            <CardHeader className="justify-content-between">
+                                               <div className="card-heading">
+                                                  <CardTitle>
+                                                     <h6>
+                                                        <strong>
+                                                           {item.banName}
+                                                        </strong>
+                                                     </h6>
+                                                  </CardTitle>
+                                                  <CardText>
+                                                     <CardLink
+                                                        href={item.locationLink}
+                                                     >
+                                                        <MapPin size="15" />{" "}
+                                                        &nbsp; Find Location
+                                                     </CardLink>
+                                                  </CardText>
+                                               </div>
+                                            </CardHeader>
+                                            <CardBody>
+                                               <CardImg
+                                                  variant="bottom"
+                                                  src={
+                                                     IMG.baseURL +
+                                                     "/" +
+                                                     item.avtar
+                                                  }
+                                               />
+                                               <hr />
+                                               <div className="justify-content-between">
+                                                  <i>Capacity:&nbsp;&nbsp;</i>
+                                                  <span className="text-success">
+                                                     {item.capacity}
+                                                  </span>
+                                                  <br />
+                                                  <br />
+                                                  <i>Location:&nbsp;&nbsp;</i>
+                                                  <span className="text-secondary">
+                                                     {item.location}
+                                                  </span>
+                                                  <br />
+                                                  <br />
+                                                  <i>Mobile:&nbsp;&nbsp;</i>
+                                                  <span className="text-info">
+                                                     {item.mobile}
+                                                  </span>
+                                               </div>
+                                            </CardBody>
+                                         </Card>
+                                      </Col>
+                                   );
+                                })}
                         </Row>
                      </Col>
                   </CardBody>
