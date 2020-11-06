@@ -27,8 +27,9 @@ class Home extends React.Component {
    constructor(props) {
       super(props);
       this.state = {
-         latitute: null,
-         longtitute: null,
+         data: [],
+         latitude: null,
+         longtitude: null,
          rowData: [],
       };
       // console.log("UserData", this.props);
@@ -61,7 +62,10 @@ class Home extends React.Component {
       }
    };
    getCoordinates = (postion) => {
-      console.log(postion);
+      const data = postion.coords.latitude;
+      const abc = postion.coords.longitude;
+      const final = data + " , " + abc;
+      this.setState({ data: final });
    };
 
    componentDidMount = () => {
@@ -79,6 +83,7 @@ class Home extends React.Component {
       // });
    };
    render() {
+      console.log(this.state.data);
       return (
          <Row>
             <Col sm="12">
@@ -97,6 +102,7 @@ class Home extends React.Component {
                                  placeholder="Search Banquet"
                                  //onChange={this.handleDiscount}
                               />
+                              <p>{this.state.data}</p>
                               <InputGroupAddon addonType="append">
                                  <InputGroupText>
                                     <MapPin size="15" />
