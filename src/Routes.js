@@ -6,7 +6,7 @@ import "../src/index.css";
 import { connect } from "react-redux";
 
 //Home Dashboard
-import Home from "./views/pages/UserDashboard/Home";
+import Home from "./views/Components/UserDashboard/Home";
 
 class Routes extends Component {
    render() {
@@ -23,6 +23,7 @@ class Routes extends Component {
       );
    }
 }
+//Once data are store in dispatch variable so whenever use it variable to call like this in below:
 const mapStateToProps = (state) => {
    return {};
 };

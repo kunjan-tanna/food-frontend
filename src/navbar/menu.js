@@ -13,7 +13,6 @@ class Menu extends Component {
                      exact
                      className="nav-link"
                      activeStyle={{ color: "red" }}
-                     //style={currentTab(history, "/")}
                   >
                      Dashboard
                   </NavLink>

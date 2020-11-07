@@ -21,7 +21,7 @@ import {
 import { connect } from "react-redux";
 import * as globalActions from "../../../redux/actions/global";
 import IMG from "../../../configs/imgConfig";
-import { Star, Edit, Trash2, Search, MapPin, ThumbsUp } from "react-feather";
+import { MapPin } from "react-feather";
 
 class Home extends React.Component {
    constructor(props) {
@@ -34,6 +34,7 @@ class Home extends React.Component {
          rowData: [],
       };
    }
+   /*To get Current Location*/
    getLocation = () => {
       if (navigator.geolocation) {
          navigator.geolocation.getCurrentPosition(
@@ -44,6 +45,7 @@ class Home extends React.Component {
          alert("hi");
       }
    };
+   /*Handle the location error*/
    handleLocation = (error) => {
       switch (error.code) {
          case error.PERMISSION_DENIED:
@@ -61,25 +63,26 @@ class Home extends React.Component {
          default:
       }
    };
+   /*To get current latitude & longtitude*/
    getCoordinates = (postion) => {
       //70.4645757, 21.5134252
       const data = postion.coords.latitude;
       const abc = postion.coords.longitude;
-      this.setState({ longtitude: abc });
-      this.setState({ latitude: data });
       this.props
-         .dispatch(globalActions.getNearBanquet(70.4645757, 21.5134252))
+         .dispatch(globalActions.getNearBanquet(abc, data))
          .then((res) => {
             let data = res.data;
             this.setState({ data });
          });
    };
-   // For Searching Value
+
+   /*For Searching Value*/
    updateSearchQuery = (val) => {
       this.setState({
          searchVal: val,
       });
    };
+   /*On load screen to show nearBy location*/
    componentDidMount = () => {
       this.props.dispatch(globalActions.getBanquet()).then((res) => {
          let rowData = res.data;
@@ -87,6 +90,7 @@ class Home extends React.Component {
       });
       this.getLocation();
    };
+
    render() {
       const final =
          this.state.data &&
@@ -100,7 +104,6 @@ class Home extends React.Component {
                .indexOf(this.state.searchVal.toLowerCase()) !== -1
          );
       });
-
       return (
          <Row>
             <Col sm="12">
@@ -122,7 +125,6 @@ class Home extends React.Component {
                                  }
                                  value={this.state.value}
                               />
-
                               <InputGroupAddon addonType="append">
                                  <InputGroupText>
                                     <MapPin size="15" />
@@ -205,6 +207,7 @@ class Home extends React.Component {
       );
    }
 }
+//Once data are store in dispatch variable so whenever use it variable to call like this in below:
 const mapStateToProps = (state) => {
    return {};
 };
