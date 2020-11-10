@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 
 //Home Dashboard
 import Home from "./views/Components/UserDashboard/Home";
+//Menu
+import Menus from "./views/Components/Menu";
 
 class Routes extends Component {
    render() {
@@ -17,6 +19,8 @@ class Routes extends Component {
                <Switch>
                   {/* For Dashboard */}
                   <Route exact path="/" component={Home} />
+                  {/* For Display Menu */}
+                  <Route exact path="/menu" component={Menus} />
                </Switch>
             </Router>
          </div>

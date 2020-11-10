@@ -17,6 +17,7 @@ class Menu extends Component {
                      Dashboard
                   </NavLink>
                </li>
+
             </ul>
          </div>
       );
