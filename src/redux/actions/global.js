@@ -14,3 +14,21 @@ export const getNearBanquet = (lng, lat) => async (dispatch) => {
 
    return res;
 };
+//get the all bundles
+export const getBundle = () => async (dispatch) => {
+   const res = await axios.get("/bundle");
+
+   return res;
+};
+//update Increment Products
+export const getIncProduct = (id, data) => async (dispatch) => {
+   const res = await axios.put(`/edit/inc/product/${id}`, data);
+
+   return res;
+};
+//update Decrement Products
+export const getDecProduct = (id, data) => async (dispatch) => {
+   const res = await axios.put(`/edit/dec/product/${id}`, data);
+
+   return res;
+};

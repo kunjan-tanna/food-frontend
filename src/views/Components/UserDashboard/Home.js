@@ -144,14 +144,12 @@ class Home extends React.Component {
                                           outline
                                           style={{
                                              borderColor: "#333",
-                                             cursor: "pointer"
+                                             cursor: "pointer",
                                           }}
                                           className="mt-4"
                                           onClick={() =>
-                                             history.push({
-                                                pathname: "/menu",
-                                                state: { banquetId: item ? item._id : "" },
-                                             })
+                                             history.push(`/menu?banquetId=${item._id}`)
+
                                           }
                                        >
                                           <CardHeader className="justify-content-between">
