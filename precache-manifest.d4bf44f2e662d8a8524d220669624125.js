@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "70b7a4dda0616be2c6d10064ff83bcb9",
+    "revision": "6157d45a6a44a5ae47c4a84a9a8426f0",
     "url": "/food-frontend/index.html"
   },
   {
-    "revision": "d47538dd112fab81fa74",
+    "revision": "23f746bc39af06d116a3",
     "url": "/food-frontend/static/css/2.f3cffc9e.chunk.css"
   },
   {
-    "revision": "4efad819c78a22117d85",
+    "revision": "6f572d381c1978948a59",
     "url": "/food-frontend/static/css/main.3ec70635.chunk.css"
   },
   {
-    "revision": "d47538dd112fab81fa74",
-    "url": "/food-frontend/static/js/2.90f8aa46.chunk.js"
+    "revision": "23f746bc39af06d116a3",
+    "url": "/food-frontend/static/js/2.e2eb6d68.chunk.js"
   },
   {
     "revision": "3453b8997016469371284a28c0e873e2",
-    "url": "/food-frontend/static/js/2.90f8aa46.chunk.js.LICENSE.txt"
+    "url": "/food-frontend/static/js/2.e2eb6d68.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "4efad819c78a22117d85",
-    "url": "/food-frontend/static/js/main.b10359d7.chunk.js"
+    "revision": "6f572d381c1978948a59",
+    "url": "/food-frontend/static/js/main.172b8f91.chunk.js"
   },
   {
     "revision": "956d69962f1380219276",
