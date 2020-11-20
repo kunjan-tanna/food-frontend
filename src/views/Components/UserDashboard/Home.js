@@ -71,7 +71,7 @@ class Home extends React.Component {
       const abc = position.coords.longitude;
 
       this.props
-         .dispatch(globalActions.getNearBanquet(70.4645757, 21.5134252))
+         .dispatch(globalActions.getNearBanquet(abc, data))
          .then((res) => {
             let data = res.data;
             this.setState({ data });
@@ -137,73 +137,74 @@ class Home extends React.Component {
                         <Row className="pt-4">
                            {filteredData && filteredData.length > 0
                               ? filteredData.map((item, index) => {
-                                 return (
-                                    <Col lg="4" sm="12" key={index}>
-                                       <Card
-                                          body
-                                          outline
-                                          style={{
-                                             borderColor: "#333",
-                                             cursor: "pointer",
-                                          }}
-                                          className="mt-4"
-                                          onClick={() =>
-                                             history.push(`/menu?banquetId=${item._id}`)
-
-                                          }
-                                       >
-                                          <CardHeader className="justify-content-between">
-                                             <div className="card-heading">
-                                                <CardTitle>
-                                                   <h6>
-                                                      <strong>
-                                                         {item.banName}
-                                                      </strong>
-                                                   </h6>
-                                                </CardTitle>
-                                                <CardText>
-                                                   <CardLink
-                                                      href={item.locationLink}
-                                                   >
-                                                      <MapPin size="15" />{" "}
+                                   return (
+                                      <Col lg="4" sm="12" key={index}>
+                                         <Card
+                                            body
+                                            outline
+                                            style={{
+                                               borderColor: "#333",
+                                               cursor: "pointer",
+                                            }}
+                                            className="mt-4"
+                                            onClick={() =>
+                                               history.push(
+                                                  `/menu?banquetId=${item._id}`
+                                               )
+                                            }
+                                         >
+                                            <CardHeader className="justify-content-between">
+                                               <div className="card-heading">
+                                                  <CardTitle>
+                                                     <h6>
+                                                        <strong>
+                                                           {item.banName}
+                                                        </strong>
+                                                     </h6>
+                                                  </CardTitle>
+                                                  <CardText>
+                                                     <CardLink
+                                                        href={item.locationLink}
+                                                     >
+                                                        <MapPin size="15" />{" "}
                                                         &nbsp; Find Location
                                                      </CardLink>
-                                                </CardText>
-                                             </div>
-                                          </CardHeader>
-                                          <CardBody>
-                                             <CardImg
-                                                variant="bottom"
-                                                src={
-                                                   IMG.baseURL +
-                                                   "/" +
-                                                   item.avtar
-                                                }
-                                             />
-                                             <hr />
-                                             <div className="justify-content-between">
-                                                <i>Capacity:&nbsp;&nbsp;</i>
-                                                <span className="text-success">
-                                                   {item.capacity}
-                                                </span>
-                                                <br />
-                                                <br />
-                                                <i>Location:&nbsp;&nbsp;</i>
-                                                <span className="text-secondary">
-                                                   {item.location}
-                                                </span>
-                                                <br />
-                                                <br />
-                                                <i>Mobile:&nbsp;&nbsp;</i>
-                                                <span className="text-info">
-                                                   {item.mobile}
-                                                </span>
-                                             </div>
-                                          </CardBody>
-                                       </Card>
-                                    </Col>
-                                 );
-                              })
+                                                  </CardText>
+                                               </div>
+                                            </CardHeader>
+                                            <CardBody>
+                                               <CardImg
+                                                  variant="bottom"
+                                                  src={
+                                                     IMG.baseURL +
+                                                     "/" +
+                                                     item.avtar
+                                                  }
+                                               />
+                                               <hr />
+                                               <div className="justify-content-between">
+                                                  <i>Capacity:&nbsp;&nbsp;</i>
+                                                  <span className="text-success">
+                                                     {item.capacity}
+                                                  </span>
+                                                  <br />
+                                                  <br />
+                                                  <i>Location:&nbsp;&nbsp;</i>
+                                                  <span className="text-secondary">
+                                                     {item.location}
+                                                  </span>
+                                                  <br />
+                                                  <br />
+                                                  <i>Mobile:&nbsp;&nbsp;</i>
+                                                  <span className="text-info">
+                                                     {item.mobile}
+                                                  </span>
+                                               </div>
+                                            </CardBody>
+                                         </Card>
+                                      </Col>
+                                   );
+                                })
                               : "No such venue found near you!"}
                         </Row>
                      </Col>

@@ -7,15 +7,6 @@ import {
    Row,
    Col,
    Table,
-   CardText,
-   Input,
-   CardLink,
-   CardImg,
-   Nav,
-   NavItem,
-   NavLink,
-   Media,
-   Collapse,
    CardTitle,
 } from "reactstrap";
 import { Minus, Plus } from "react-feather";
@@ -26,18 +17,19 @@ class Cart extends React.Component {
       super(props);
       this.state = {
          cart: this.props.addItem1,
-         subTotal: 0,
+         prevPrice: 0,
+         price: 0,
          total: 0,
          updateData: [],
       };
    }
+   /*Handle the Increment Quantity*/
    handleInc = (i, index) => {
       let obj = {
          productId: i._id,
          quantity: i.quantity,
          price: i.price,
       };
-
       this.props
          .dispatch(globalActions.getIncProduct(i._id, obj))
          .then((res) => {
@@ -56,14 +48,50 @@ class Cart extends React.Component {
             });
          });
    };
+   /*Handle the Decrement Quantity*/
+   handleDec = (item) => {
+      this.setState(
+         (prevState) => {
+            return {
+               price: item.price,
+               prevPrice: prevState.price,
+            };
+         },
+         () => {
+            let obj = {
+               productId: item._id,
+               quantity: item.quantity,
+               price: this.state.price,
+            };
+            this.props
+               .dispatch(globalActions.getDecProduct(item._id, obj))
+               .then((res) => {
+                  let data1 = res.data;
+                  data1.price = this.state.prevPrice;
+
+                  this.state.cart.map((item, index) => {
+                     if (item._id === data1._id) {
+                        this.state.cart.splice(index, 1, data1);
+                        let cart = this.state.cart;
+                        let total = cart.reduce(
+                           (totalitem, item) => +totalitem + +item.price,
+                           0
+                        );
+                        this.setState({ total });
+                        this.setState({ cart });
+                     }
+                  });
+               });
+         }
+      );
+   };
+
    render() {
       let price = this.state.cart;
-
       let total1 = price.reduce(
          (totalitem, item) => +totalitem + +item.price,
          0
       );
-
       return (
          <Card>
             <CardHeader>
@@ -94,11 +122,10 @@ class Cart extends React.Component {
                                             className="mr-1"
                                             color="primary"
                                             type="submit"
-                                            //onClick={() => this.handleInc}
+                                            onClick={() => this.handleDec(i)}
                                          >
                                             <Minus size={15} />
                                          </Button>
-
                                          <Button
                                             className="mr-1"
                                             color="primary"
@@ -120,10 +147,7 @@ class Cart extends React.Component {
             </CardBody>
             <div className="invoice-total-table">
                <Row>
-                  <Col
-                     sm={{ size: 6, offset: 6 }}
-                     //xs={{ size: 7, offset: 5 }}
-                  >
+                  <Col sm={{ size: 6, offset: 6 }}>
                      <Table responsive borderless>
                         <tbody>
                            <tr>

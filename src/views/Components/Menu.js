@@ -18,11 +18,8 @@ import { ChevronDown } from "react-feather";
 import Cart from "./Cart";
 import ExtraItem from "./ExtraItem";
 import { connect } from "react-redux";
-import update from "immutability-helper";
-import { Minus, Plus } from "react-feather";
 import * as IMG from "../../configs/imgConfig";
 import * as globalActions from "../../redux/actions/global";
-import classnames from "classnames";
 
 class Menu extends React.Component {
    constructor(props) {
@@ -33,7 +30,6 @@ class Menu extends React.Component {
          rowData: [],
          subTotal: 0,
          comboItem: [],
-
          total: 0,
          arr: [],
          data: [],
@@ -58,6 +54,7 @@ class Menu extends React.Component {
          this.setState({ rowData });
       });
    };
+
    /*Open the Pop-Up Box for combo*/
    toggleModal = (item) => {
       this.state.rowData &&
@@ -86,16 +83,17 @@ class Menu extends React.Component {
    onExiting = () => {
       this.setState({ status: "Closing..." });
    };
+   /* Handle the AddToCart Component*/
    addToCart = (data) => {
       let arr = this.state.arr;
-
       arr.push({
          ...data,
          count: 1,
       });
-
       this.setState({ arr });
    };
+
+   /*handle the data from Child Component*/
    handleChild = (price, name, quantity, id) => {
       let cart = {
          price: price,
@@ -103,14 +101,11 @@ class Menu extends React.Component {
          quantity: quantity,
          _id: id,
       };
-
       let arr = this.state.arr;
-
       arr.push({
          ...cart,
          count: 1,
       });
-
       this.setState({ arr });
       this.toggleModal();
    };
@@ -162,11 +157,11 @@ class Menu extends React.Component {
                               onExiting={this.onExiting}
                               onEntering={this.onEntering}
                            >
+                              {/* Paneer Items */}
                               <Card>
                                  <CardHeader>
                                     <CardTitle tag="h5">Paneer Items</CardTitle>
                                  </CardHeader>
-
                                  <CardBody>
                                     <Table size="md" responsive bordered>
                                        <thead>
@@ -222,6 +217,7 @@ class Menu extends React.Component {
                                     </Table>
                                  </CardBody>
                               </Card>
+                              {/* Veg Items */}
                               <Card>
                                  <CardHeader>
                                     <CardTitle tag="h5">Veg Items</CardTitle>
@@ -281,6 +277,7 @@ class Menu extends React.Component {
                                     </Table>
                                  </CardBody>
                               </Card>
+                              {/* Combo Items */}
                               <Card>
                                  <CardHeader>
                                     <CardTitle tag="h5">Combo Items</CardTitle>
@@ -341,6 +338,7 @@ class Menu extends React.Component {
                                  </CardBody>
                               </Card>
                            </Collapse>
+                           {/* Open the Pop-Up Model */}
                            <Modal
                               isOpen={this.state.showLeadModal}
                               toggle={this.toggleModal}

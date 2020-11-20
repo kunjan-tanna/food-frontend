@@ -13,9 +13,7 @@ import {
    Label,
    Input,
 } from "reactstrap";
-
 import { connect } from "react-redux";
-import * as globalActions from "../../redux/actions/global";
 
 class ExtraItem extends React.Component {
    constructor(props) {
@@ -28,6 +26,7 @@ class ExtraItem extends React.Component {
          addItem: this.props.addItem,
       };
    }
+   /*Handle the Extra Items*/
    handleItem = (abc) => {
       this.setState({ extraPrice: abc.price }, () => {
          const total = +this.state.addItem.price + +this.state.extraPrice;
@@ -37,6 +36,7 @@ class ExtraItem extends React.Component {
       let name = abc.itemName;
       this.setState({ name });
    };
+   /*Handle the AddToCart */
    handleClick = () => {
       let price = this.state.total
          ? this.state.total
@@ -48,17 +48,7 @@ class ExtraItem extends React.Component {
       let id = this.state.addItem._id;
       this.props.handleChild(price, name, quantity, id);
    };
-   //handleInput
-   handleInput = (event) => {
-      event.persist();
-      this.setState((prevState) => ({
-         formData: {
-            ...prevState.formData,
-            [event.target.name]: event.target.value,
-         },
-      }));
-   };
-   handleFormSubmit = () => {};
+
    render() {
       const { addItem } = this.state;
       const { addExtraItem } = this.props;
@@ -96,13 +86,13 @@ class ExtraItem extends React.Component {
                               </tr>
                            </thead>
                            {addExtraItem &&
-                              addExtraItem.map((iten, index) => {
+                              addExtraItem.map((item, index) => {
                                  return (
                                     <tbody key={index}>
                                        <tr>
-                                          <td>{iten.itemName}</td>
+                                          <td>{item.itemName}</td>
                                           <td>
-                                             {iten.price}
+                                             {item.price}
                                              &nbsp; INR
                                           </td>
                                           <td>
@@ -111,7 +101,7 @@ class ExtraItem extends React.Component {
                                                 type="radio"
                                                 name="radio"
                                                 onChange={() =>
-                                                   this.handleItem(iten)
+                                                   this.handleItem(item)
                                                 }
                                              />
                                           </td>
