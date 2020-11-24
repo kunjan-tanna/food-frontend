@@ -71,7 +71,7 @@ class Home extends React.Component {
       const abc = position.coords.longitude;
 
       this.props
-         .dispatch(globalActions.getNearBanquet(abc, data))
+         .dispatch(globalActions.getNearBanquet(70.4645757, 21.5134252))
          .then((res) => {
             let data = res.data;
             this.setState({ data });

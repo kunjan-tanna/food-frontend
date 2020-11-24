@@ -9,7 +9,7 @@ import {
    Table,
    CardTitle,
 } from "reactstrap";
-import { Minus, Plus } from "react-feather";
+import { Minus, Plus, Trash } from "react-feather";
 import * as globalActions from "../../redux/actions/global";
 
 class Cart extends React.Component {
@@ -85,13 +85,21 @@ class Cart extends React.Component {
          }
       );
    };
-
+   /*Remove the particular Item*/
+   handleDel = (item) => {
+      this.props.dispatch(globalActions.removeParticularItem(item));
+      window.location.reload();
+   };
+   /*Remove the all the item*/
+   handleRemove = (e) => {
+      e.preventDefault();
+      this.props.removeItem();
+   };
    render() {
       let price = this.state.cart;
-      let total1 = price.reduce(
-         (totalitem, item) => +totalitem + +item.price,
-         0
-      );
+      let total1 =
+         price &&
+         price.reduce((totalitem, item) => +totalitem + +item.price, 0);
       return (
          <Card>
             <CardHeader>
@@ -101,6 +109,7 @@ class Cart extends React.Component {
                <Table bordered>
                   <thead>
                      <tr>
+                        <th>Remove</th>
                         <th>Product Name</th>
                         <th>Price</th>
                         <th>Quantity</th>
@@ -113,6 +122,18 @@ class Cart extends React.Component {
                           return (
                              <tbody key={index}>
                                 <tr>
+                                   <td>
+                                      <div className="d-flex justify-content-start">
+                                         <Button
+                                            className="mr-1"
+                                            color="primary"
+                                            type="submit"
+                                            onClick={() => this.handleDel(i)}
+                                         >
+                                            <Trash size={15} />
+                                         </Button>
+                                      </div>
+                                   </td>
                                    <td>{i.productName}</td>
                                    <td> {i.price} &nbsp; INR</td>
                                    <td> {i.quantity}</td>
@@ -147,13 +168,28 @@ class Cart extends React.Component {
             </CardBody>
             <div className="invoice-total-table">
                <Row>
-                  <Col sm={{ size: 6, offset: 6 }}>
+                  <Col sm="12">
                      <Table responsive borderless>
                         <tbody>
                            <tr>
-                              <th>TOTAL</th>
+                              <th className="text-right">Total</th>
+                           </tr>
+                           <tr>
                               <td>
-                                 {this.state.total ? this.state.total : total1}
+                                 <div className="d-flex justify-content-between">
+                                    <Button
+                                       className="mr-1"
+                                       color="primary"
+                                       type="submit"
+                                       onClick={(e) => this.handleRemove(e)}
+                                    >
+                                       Remove All
+                                    </Button>
+
+                                    {this.state.total
+                                       ? this.state.total
+                                       : total1}
+                                 </div>
                               </td>
                            </tr>
                         </tbody>

@@ -32,3 +32,17 @@ export const getDecProduct = (id, data) => async (dispatch) => {
 
    return res;
 };
+//Save the Product as well as ExtraItem
+export const saveData = (data) => async (dispatch) => {
+   //console.log("LEADCONTACT", data);
+   dispatch({ type: "EX_PRODUCT", payload: data });
+   return data;
+};
+//Remove the product item from localStorage
+export const removeItem = () => async (dispatch) => {
+   return dispatch({ type: "DEL_ITEM" });
+};
+//Remove the particular product item from localStorage
+export const removeParticularItem = (data) => async (dispatch) => {
+   return dispatch({ type: "DEL_PAR_ITEM", payload: data });
+};

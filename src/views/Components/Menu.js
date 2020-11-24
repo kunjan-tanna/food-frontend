@@ -31,7 +31,7 @@ class Menu extends React.Component {
          subTotal: 0,
          comboItem: [],
          total: 0,
-         arr: [],
+         arr: this.props.data1,
          data: [],
          item: [],
          showLeadModal: false,
@@ -90,7 +90,15 @@ class Menu extends React.Component {
          ...data,
          count: 1,
       });
+
+      this.props.dispatch(globalActions.saveData(arr));
+
       this.setState({ arr });
+   };
+   /*Remove from Cart*/
+   handleRemove = () => {
+      this.props.dispatch(globalActions.removeItem());
+      window.location.reload();
    };
 
    /*handle the data from Child Component*/
@@ -106,6 +114,7 @@ class Menu extends React.Component {
          ...cart,
          count: 1,
       });
+      this.props.dispatch(globalActions.saveData(arr));
       this.setState({ arr });
       this.toggleModal();
    };
@@ -365,7 +374,11 @@ class Menu extends React.Component {
             </Col>
 
             <Col md="6" sm="12">
-               <Cart addItem1={this.state.arr} dispatch={this.props.dispatch} />
+               <Cart
+                  addItem1={this.state.arr}
+                  dispatch={this.props.dispatch}
+                  removeItem={this.handleRemove}
+               />
             </Col>
          </Row>
       );
@@ -373,7 +386,8 @@ class Menu extends React.Component {
 }
 //Once data are store in dispatch variable so whenever use it variable to call like this in below:
 const mapStateToProps = (state) => {
-   return {};
+   return {
+      data1: state.globalReducer.data,
+   };
 };
-
 export default connect(mapStateToProps)(Menu);

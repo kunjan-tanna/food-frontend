@@ -6,7 +6,7 @@ import { combineReducers } from "redux";
 const persistConfig = {
    key: "jwt",
    storage,
-   whitelist: ["auth"],
+   whitelist: ["globalReducer"],
 };
 
 const rootReducer = combineReducers({
