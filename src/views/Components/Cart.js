@@ -8,8 +8,12 @@ import {
    Col,
    Table,
    CardTitle,
+   Modal,
+   ModalHeader,
+   ModalBody,
 } from "reactstrap";
 import { Minus, Plus, Trash } from "react-feather";
+import PlaceLogin from "./PlaceLogin";
 import * as globalActions from "../../redux/actions/global";
 
 class Cart extends React.Component {
@@ -20,7 +24,9 @@ class Cart extends React.Component {
          prevPrice: 0,
          price: 0,
          total: 0,
+
          updateData: [],
+         showLeadModal: false,
       };
    }
    /*Handle the Increment Quantity*/
@@ -91,10 +97,32 @@ class Cart extends React.Component {
       window.location.reload();
    };
    /*Remove the all the item*/
-   handleRemove = (e) => {
-      e.preventDefault();
+   handleRemove = () => {
       this.props.removeItem();
    };
+   /*Open the Pop-Up Box for combo*/
+   toggleModal = () => {
+      this.setState((prevState) => ({
+         showLeadModal: !prevState.showLeadModal,
+      }));
+   };
+   toggle = () => {
+      this.setState((state) => ({ collapse: !state.collapse }));
+   };
+   onEntered = () => {
+      this.setState({ status: "Opened" });
+   };
+   onEntering = () => {
+      this.setState({ status: "Opening..." });
+   };
+   onExited = () => {
+      this.setState({ status: "Closed" });
+   };
+
+   onExiting = () => {
+      this.setState({ status: "Closing..." });
+   };
+
    render() {
       let price = this.state.cart;
       let total1 =
@@ -128,7 +156,7 @@ class Cart extends React.Component {
                                             className="mr-1"
                                             color="primary"
                                             type="submit"
-                                            onClick={() => this.handleDel(i)}
+                                            onClick={(e) => this.handleDel(i)}
                                          >
                                             <Trash size={15} />
                                          </Button>
@@ -175,20 +203,34 @@ class Cart extends React.Component {
                               <th className="text-right">Total</th>
                            </tr>
                            <tr>
+                              <td className="text-right">
+                                 {this.state.total ? this.state.total : total1}
+                              </td>
+                           </tr>
+
+                           <tr>
                               <td>
                                  <div className="d-flex justify-content-between">
                                     <Button
                                        className="mr-1"
                                        color="primary"
                                        type="submit"
-                                       onClick={(e) => this.handleRemove(e)}
+                                       onClick={() => this.handleRemove()}
                                     >
                                        Remove All
                                     </Button>
-
-                                    {this.state.total
-                                       ? this.state.total
-                                       : total1}
+                                    {this.state.cart.length > 0 ? (
+                                       <Button
+                                          className="mr-1"
+                                          color="primary"
+                                          type="submit"
+                                          onClick={() => this.toggleModal()}
+                                       >
+                                          Place Order
+                                       </Button>
+                                    ) : (
+                                       "No Place the order"
+                                    )}
                                  </div>
                               </td>
                            </tr>
@@ -197,6 +239,19 @@ class Cart extends React.Component {
                   </Col>
                </Row>
             </div>
+            {/* Open the Pop-Up Model */}
+            <Modal
+               isOpen={this.state.showLeadModal}
+               toggle={this.toggleModal}
+               className="modal-dialog-centered modal-lg"
+            >
+               <ModalHeader toggle={this.toggleModal} className="bg-primary">
+                  Welcome back, please login to your account
+               </ModalHeader>
+               <ModalBody>
+                  <PlaceLogin />
+               </ModalBody>
+            </Modal>
          </Card>
       );
    }

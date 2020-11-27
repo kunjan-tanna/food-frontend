@@ -3,6 +3,8 @@ import { act } from "react-dom/test-utils";
 export const initialState = {
    banquets: [],
    data: [],
+   userInfo: "",
+   accessToken: "",
 };
 
 //To Store the Actions
@@ -18,6 +20,13 @@ const global = (state = initialState, action) => {
          return {
             data: [...state.data.filter((item) => item !== action.payload)],
          };
+      case "LOGIN_WITH_JWT":
+         return Object.assign({}, state, {
+            userInfo: action.payload.userInfo,
+            accessToken: action.payload.accessToken,
+         });
+      case "LOGOUT":
+         return initialState;
       default:
          return state;
    }

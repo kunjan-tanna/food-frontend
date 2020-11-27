@@ -19,6 +19,7 @@ import {
    InputGroupText,
 } from "reactstrap";
 import { connect } from "react-redux";
+import Menu1 from "../../../navbar/menu";
 import { history } from "../../../history";
 import * as globalActions from "../../../redux/actions/global";
 import IMG from "../../../configs/imgConfig";
@@ -71,7 +72,7 @@ class Home extends React.Component {
       const abc = position.coords.longitude;
 
       this.props
-         .dispatch(globalActions.getNearBanquet(70.4645757, 21.5134252))
+         .dispatch(globalActions.getNearBanquet(abc, data))
          .then((res) => {
             let data = res.data;
             this.setState({ data });
@@ -108,6 +109,7 @@ class Home extends React.Component {
       });
       return (
          <Row>
+            <Menu1 />
             <Col sm="12">
                <Card className="pt-1">
                   <CardBody>

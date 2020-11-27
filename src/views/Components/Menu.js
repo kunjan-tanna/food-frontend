@@ -17,6 +17,7 @@ import {
 import { ChevronDown } from "react-feather";
 import Cart from "./Cart";
 import ExtraItem from "./ExtraItem";
+import Menu1 from "../../navbar/menu";
 import { connect } from "react-redux";
 import * as IMG from "../../configs/imgConfig";
 import * as globalActions from "../../redux/actions/global";
@@ -28,9 +29,7 @@ class Menu extends React.Component {
          collapse: false,
          status: "Opened",
          rowData: [],
-         subTotal: 0,
          comboItem: [],
-         total: 0,
          arr: this.props.data1,
          data: [],
          item: [],
@@ -48,7 +47,6 @@ class Menu extends React.Component {
             if (i.banquetId === banquetId) {
                return i;
             } else {
-               console.log("sorry");
             }
          });
          this.setState({ rowData });
@@ -122,6 +120,9 @@ class Menu extends React.Component {
    render() {
       return (
          <Row>
+            <Col sm="12">
+               <Menu1 />
+            </Col>
             <Col md="6" sm="12">
                {this.state.rowData &&
                   this.state.rowData.map((i, index) => {
