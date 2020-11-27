@@ -1,25 +1,26 @@
 {
   "files": {
     "main.css": "/food-frontend/static/css/main.3ec70635.chunk.css",
-    "main.js": "/food-frontend/static/js/main.0a4a466d.chunk.js",
-    "main.js.map": "/food-frontend/static/js/main.0a4a466d.chunk.js.map",
+    "main.js": "/food-frontend/static/js/main.facc5b2b.chunk.js",
+    "main.js.map": "/food-frontend/static/js/main.facc5b2b.chunk.js.map",
     "runtime-main.js": "/food-frontend/static/js/runtime-main.b72bebee.js",
     "runtime-main.js.map": "/food-frontend/static/js/runtime-main.b72bebee.js.map",
-    "static/css/2.f3cffc9e.chunk.css": "/food-frontend/static/css/2.f3cffc9e.chunk.css",
-    "static/js/2.e64377f3.chunk.js": "/food-frontend/static/js/2.e64377f3.chunk.js",
-    "static/js/2.e64377f3.chunk.js.map": "/food-frontend/static/js/2.e64377f3.chunk.js.map",
+    "static/css/2.40e39229.chunk.css": "/food-frontend/static/css/2.40e39229.chunk.css",
+    "static/js/2.8629ddd1.chunk.js": "/food-frontend/static/js/2.8629ddd1.chunk.js",
+    "static/js/2.8629ddd1.chunk.js.map": "/food-frontend/static/js/2.8629ddd1.chunk.js.map",
     "index.html": "/food-frontend/index.html",
-    "precache-manifest.f8f6222d8c22f8fa38626dc28b482f76.js": "/food-frontend/precache-manifest.f8f6222d8c22f8fa38626dc28b482f76.js",
+    "precache-manifest.9f2c35552620c271f86a55ccae20bd19.js": "/food-frontend/precache-manifest.9f2c35552620c271f86a55ccae20bd19.js",
     "service-worker.js": "/food-frontend/service-worker.js",
-    "static/css/2.f3cffc9e.chunk.css.map": "/food-frontend/static/css/2.f3cffc9e.chunk.css.map",
+    "static/css/2.40e39229.chunk.css.map": "/food-frontend/static/css/2.40e39229.chunk.css.map",
     "static/css/main.3ec70635.chunk.css.map": "/food-frontend/static/css/main.3ec70635.chunk.css.map",
-    "static/js/2.e64377f3.chunk.js.LICENSE.txt": "/food-frontend/static/js/2.e64377f3.chunk.js.LICENSE.txt"
+    "static/js/2.8629ddd1.chunk.js.LICENSE.txt": "/food-frontend/static/js/2.8629ddd1.chunk.js.LICENSE.txt",
+    "static/media/background.jpg": "/food-frontend/static/media/background.6c134bdd.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.b72bebee.js",
-    "static/css/2.f3cffc9e.chunk.css",
-    "static/js/2.e64377f3.chunk.js",
+    "static/css/2.40e39229.chunk.css",
+    "static/js/2.8629ddd1.chunk.js",
     "static/css/main.3ec70635.chunk.css",
-    "static/js/main.0a4a466d.chunk.js"
+    "static/js/main.facc5b2b.chunk.js"
   ]
 }
