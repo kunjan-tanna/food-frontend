@@ -4,31 +4,53 @@ import { history } from "./history";
 import "../src/index.css";
 import { connect } from "react-redux";
 
-//Home Dashboard
-import Home from "./views/Components/UserDashboard/Home";
-//Menu
-import Menus from "./views/Components/Menu";
-//Register
-import Register from "./views/Components/Register";
-//Place
-import Place from "./views/Components/Place";
+//material-ui
+import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+
+//Util Files
+import ScrollToTop from "./util/scrollToTop";
+import themeFile from "./util/theme";
+
+//Component Files
+import Appbar from "./views/Components/Appbar";
+import Footer from "./views/Components/Footer";
+
+//Pages Files
+import Home from "./views/pages/Home";
+import Menus from "./views/pages/Menu";
+import Register from "./views/pages/Register";
+import Place from "./views/pages/Place";
+import Login from "./views/pages/PlaceLogin";
+import error404 from "./views/pages/error404";
+
+const theme = createMuiTheme(themeFile);
 
 class Routes extends Component {
    render() {
       return (
          <div>
-            <Router history={history}>
-               <Switch>
-                  {/* For Dashboard */}
-                  <Route exact path="/" component={Home} />
-                  {/* For Display Menu */}
-                  <Route exact path="/menu" component={Menus} />
-                  {/* For Display Register*/}
-                  <Route exact path="/register" component={Register} />
-                  {/* For Display Place*/}
-                  <Route exact path="/place" component={Place} />
-               </Switch>
-            </Router>
+            <MuiThemeProvider theme={theme}>
+               <Router history={history}>
+                  <Appbar />
+                  <ScrollToTop />
+                  <Switch>
+                     {/* For Dashboard */}
+                     <Route exact path="/" component={Home} />
+                     {/* For Display Menu */}
+                     <Route exact path="/menu" component={Menus} />
+                     {/* For Display Register*/}
+                     <Route exact path="/register" component={Register} />
+                     {/* For Display Login*/}
+                     <Route exact path="/login" component={Login} />
+                     {/* For Display Place*/}
+                     <Route exact path="/place" component={Place} />
+                     {/* For Display Error Page*/}
+                     <Route component={error404} />
+                  </Switch>
+                  <Footer />
+               </Router>
+            </MuiThemeProvider>
          </div>
       );
    }

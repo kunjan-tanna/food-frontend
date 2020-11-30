@@ -3,7 +3,6 @@ import {
    CardBody,
    CardHeader,
    Card,
-   Button,
    Row,
    Col,
    Table,
@@ -14,13 +13,55 @@ import {
    Collapse,
    CardTitle,
 } from "reactstrap";
-import { ChevronDown } from "react-feather";
+import { ChevronDown, ChevronUp } from "react-feather";
 import Cart from "./Cart";
 import ExtraItem from "./ExtraItem";
-import Menu1 from "../../navbar/menu";
 import { connect } from "react-redux";
 import * as IMG from "../../configs/imgConfig";
+import backImg from "../../imgs/punjabi_bg.jpg";
+import vegItem from "../../imgs/vegItem.jpg";
+import pannerItem from "../../imgs/pannerItem.jpg";
+import comboItem from "../../imgs/comboImg.jpeg";
 import * as globalActions from "../../redux/actions/global";
+
+//material-ui
+import Button from "@material-ui/core/Button";
+
+const styles = {
+   img: {
+      backgroundImage: `url(${backImg})`,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+      cursor: "pointer",
+      color: "white",
+   },
+   vegHeader: {
+      backgroundImage: `url(${vegItem})`,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+   },
+   paneerHeader: {
+      backgroundImage: `url(${pannerItem})`,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+   },
+   comboHeader: {
+      backgroundImage: `url(${comboItem})`,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+      color: "white",
+   },
+   content: {
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+   },
+   header: {
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+   },
+   table: {
+      color: "white",
+      backgroundColor: "#333945",
+   },
+};
 
 class Menu extends React.Component {
    constructor(props) {
@@ -120,27 +161,27 @@ class Menu extends React.Component {
    render() {
       return (
          <Row>
-            <Col sm="12">
-               <Menu1 />
-            </Col>
             <Col md="6" sm="12">
                {this.state.rowData &&
                   this.state.rowData.map((i, index) => {
                      return (
-                        <Card
-                           style={{
-                              cursor: "pointer",
-                           }}
-                           key={index}
-                        >
-                           <CardHeader>
+                        <Card style={styles.img} key={index}>
+                           <CardHeader style={styles.header}>
                               <div className="d-flex justify-content-between">
                                  <CardTitle tag="h2">{i.banName}</CardTitle>
-                                 <ChevronDown
-                                    className="collapse-icon"
-                                    size={20}
-                                    onClick={this.toggle}
-                                 />
+                                 {!this.state.collapse ? (
+                                    <ChevronDown
+                                       className="collapse-icon"
+                                       size={20}
+                                       onClick={this.toggle}
+                                    />
+                                 ) : (
+                                    <ChevronUp
+                                       className="collapse-icon"
+                                       size={20}
+                                       onClick={this.toggle}
+                                    />
+                                 )}
                               </div>
                               <Media className="d-sm-flex d-block">
                                  <Media className="mt-md-1 mt-0">
@@ -169,11 +210,17 @@ class Menu extends React.Component {
                            >
                               {/* Paneer Items */}
                               <Card>
-                                 <CardHeader>
-                                    <CardTitle tag="h5">Paneer Items</CardTitle>
+                                 <CardHeader style={styles.paneerHeader}>
+                                    <CardTitle tag="h5" style={styles.content}>
+                                       Paneer Items
+                                    </CardTitle>
                                  </CardHeader>
                                  <CardBody>
-                                    <Table size="md" responsive bordered>
+                                    <Table
+                                       responsive
+                                       bordered
+                                       style={styles.table}
+                                    >
                                        <thead>
                                           <tr>
                                              <th>Product Name</th>
@@ -206,16 +253,22 @@ class Menu extends React.Component {
                                                             </td>
                                                             <td>
                                                                <Button
-                                                                  className="mr-1"
-                                                                  color="primary"
+                                                                  style={{
+                                                                     color:
+                                                                        "#000",
+                                                                     marginLeft:
+                                                                        "10%",
+                                                                  }}
+                                                                  color="secondary"
                                                                   type="submit"
+                                                                  variant="contained"
                                                                   onClick={() =>
                                                                      this.addToCart(
                                                                         item
                                                                      )
                                                                   }
                                                                >
-                                                                  Add
+                                                                  Add To Cart
                                                                </Button>
                                                             </td>
                                                          </tr>
@@ -229,11 +282,17 @@ class Menu extends React.Component {
                               </Card>
                               {/* Veg Items */}
                               <Card>
-                                 <CardHeader>
-                                    <CardTitle tag="h5">Veg Items</CardTitle>
+                                 <CardHeader style={styles.vegHeader}>
+                                    <CardTitle tag="h5" style={styles.content}>
+                                       Veg Items
+                                    </CardTitle>
                                  </CardHeader>
                                  <CardBody>
-                                    <Table size="md" responsive bordered>
+                                    <Table
+                                       responsive
+                                       bordered
+                                       style={styles.table}
+                                    >
                                        <thead>
                                           <tr>
                                              <th>Product Name</th>
@@ -266,16 +325,20 @@ class Menu extends React.Component {
                                                             </td>
                                                             <td>
                                                                <Button
-                                                                  className="mr-1"
-                                                                  color="primary"
+                                                                  style={{
+                                                                     color:
+                                                                        "#000",
+                                                                  }}
+                                                                  color="secondary"
                                                                   type="submit"
+                                                                  variant="contained"
                                                                   onClick={() =>
                                                                      this.addToCart(
                                                                         item
                                                                      )
                                                                   }
                                                                >
-                                                                  Add
+                                                                  Add To Cart
                                                                </Button>
                                                             </td>
                                                          </tr>
@@ -289,11 +352,18 @@ class Menu extends React.Component {
                               </Card>
                               {/* Combo Items */}
                               <Card>
-                                 <CardHeader>
-                                    <CardTitle tag="h5">Combo Items</CardTitle>
+                                 <CardHeader style={styles.comboHeader}>
+                                    <CardTitle tag="h5" style={styles.content}>
+                                       Combo Items
+                                    </CardTitle>
                                  </CardHeader>
                                  <CardBody>
-                                    <Table size="md" responsive bordered>
+                                    <Table
+                                       size="md"
+                                       responsive
+                                       bordered
+                                       style={styles.table}
+                                    >
                                        <thead>
                                           <tr>
                                              <th>Product Name</th>
@@ -326,16 +396,22 @@ class Menu extends React.Component {
                                                             </td>
                                                             <td>
                                                                <Button
-                                                                  className="mr-1"
-                                                                  color="primary"
+                                                                  style={{
+                                                                     color:
+                                                                        "#000",
+                                                                     marginLeft:
+                                                                        "10%",
+                                                                  }}
+                                                                  color="secondary"
                                                                   type="submit"
+                                                                  variant="contained"
                                                                   onClick={() =>
                                                                      this.toggleModal(
                                                                         item
                                                                      )
                                                                   }
                                                                >
-                                                                  Add
+                                                                  Add To Cart
                                                                </Button>
                                                             </td>
                                                          </tr>
@@ -356,12 +432,14 @@ class Menu extends React.Component {
                            >
                               <ModalHeader
                                  toggle={this.toggleModal}
-                                 className="bg-primary"
+                                 style={{ backgroundColor: "#f7a692" }}
                               >
                                  Choose Extra Items
                               </ModalHeader>
                               <ModalBody>
                                  <ExtraItem
+                                    style={styles.comboHeader}
+                                    styleTable={styles.table}
                                     toggleModal={this.toggleModal}
                                     addItem={this.state.comboItem}
                                     addExtraItem={this.state.item}
@@ -376,6 +454,7 @@ class Menu extends React.Component {
 
             <Col md="6" sm="12">
                <Cart
+                  styleTable={styles.table}
                   addItem1={this.state.arr}
                   dispatch={this.props.dispatch}
                   removeItem={this.handleRemove}

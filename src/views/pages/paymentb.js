@@ -1,8 +1,22 @@
 import React from "react";
 import DropIn from "braintree-web-drop-in-react";
 import * as paymentAction from "../../redux/actions/payment/payment";
-import { Button, Row, Col, Card, CardBody, CardHeader } from "reactstrap";
+import { Row, Col, Card, CardBody, CardHeader, CardTitle } from "reactstrap";
+//material-ui
+import Button from "@material-ui/core/Button";
 
+const styles = {
+   content: {
+      height: "95%",
+      color: "white",
+      backgroundColor: "rgba(0, 3, 0, 0.5)",
+   },
+   button: {
+      display: "block",
+      width: "100%",
+      color: "#000",
+   },
+};
 class Paymentb extends React.Component {
    constructor(props) {
       super(props);
@@ -44,8 +58,10 @@ class Paymentb extends React.Component {
       return (
          <Row>
             <Col sm={{ size: 11, offset: 0 }}>
-               <Card>
-                  <CardHeader>Payment</CardHeader>
+               <Card style={styles.content}>
+                  <CardHeader>
+                     <CardTitle tag="h5">Payment Details</CardTitle>
+                  </CardHeader>
                   <CardBody>
                      {this.state.clientToken !== null ? (
                         <div>
@@ -58,7 +74,10 @@ class Paymentb extends React.Component {
                               }
                            />
                            <Button
-                              className="btn btn-block btn-primary"
+                              style={styles.button}
+                              color="secondary"
+                              type="submit"
+                              variant="contained"
                               onClick={() => this.onPurchase()}
                            >
                               Buy

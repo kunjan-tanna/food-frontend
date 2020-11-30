@@ -1,0 +1,63 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+//material-ui
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+
+const useStyles = makeStyles((theme) => ({
+   container: {
+      backgroundColor: "#e8ede1",
+      marginTop: 40,
+      height: "42vh",
+      textAlign: "center",
+   },
+   innerCont: {
+      margin: "74px 40px 40px 40px",
+   },
+   resources: {
+      margin: "60px 40px 10px 40px",
+   },
+   buttonStyleOne: {
+      color: "white",
+      backgroundColor: theme.palette.primary.main,
+      "&:hover": {
+         backgroundColor: "#5a5c5a",
+      },
+   },
+   buttonStyleTwo: {
+      color: "white",
+      backgroundColor: theme.palette.primary.main,
+      marginLeft: 10,
+      marginTop: 8,
+      "&:hover": {
+         backgroundColor: "#5a5c5a",
+      },
+   },
+}));
+
+export default function Footer() {
+   const classes = useStyles();
+   return (
+      <Grid container direction="row" className={classes.container}>
+         <Grid item xs={12} className={classes.innerCont}>
+            <Typography variant="h5" component="p">
+               Food Order NewsLetter
+            </Typography>
+            <Typography
+               variant="body1"
+               component="p"
+               style={{ marginBottom: 28 }}
+            >
+               Stay updated with new offers from FoodOrder
+            </Typography>
+            <TextField label="Your Email address" variant="outlined" />
+            <Button className={classes.buttonStyleTwo}>SEND</Button>
+         </Grid>
+      </Grid>
+   );
+}

@@ -1,6 +1,5 @@
 import React from "react";
 import {
-   Button,
    Card,
    CardBody,
    CardHeader,
@@ -12,7 +11,6 @@ import {
    Label,
 } from "reactstrap";
 import { GoogleLogin } from "react-google-login";
-import { Facebook } from "react-feather";
 import FacebookLogin from "react-facebook-login";
 import { NavLink } from "react-router-dom";
 import { history } from "../../history";
@@ -22,8 +20,40 @@ import {
    logInFacebook,
 } from "../../redux/actions/auth/auth";
 import { connect } from "react-redux";
+import backImg from "../../imgs/login_bg.jpg";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+//material-ui
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+
+const styles = {
+   header: {
+      backgroundImage: `url(${backImg})`,
+      height: "100vh",
+      justifyContent: "center",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+   },
+
+   content: {
+      height: "100%",
+      width: "100%",
+      color: "white",
+      backgroundColor: "rgba(0, 3, 0, 0.5)",
+   },
+   title: {
+      margin: "40px 0px 10px 0px",
+   },
+   google: {
+      justifyContent: "center",
+   },
+   link: {
+      color: "#DAE0E2",
+      textDecoration: "none",
+   },
+};
 
 class PlaceLogin extends React.Component {
    constructor(props) {
@@ -79,26 +109,45 @@ class PlaceLogin extends React.Component {
       const { userInfo } = this.state;
 
       return (
-         <Row className="m-0 justify-content-center">
-            <Col
-               sm="8"
-               xl="7"
-               lg="10"
-               md="8"
-               className="d-flex justify-content-center pt-4"
-            >
+         <Row style={styles.header}>
+            <Col md={6} lg={4}>
                {userInfo && userInfo ? (
-                  <FormGroup>
-                     <div>
-                        You Already Logged Please{" "}
-                        <NavLink to="/place" exact>
+                  <div style={{ textAlign: "center" }}>
+                     <p
+                        style={{
+                           color: "white",
+                           position: "absolute",
+                           top: "54%",
+                           left: "20%",
+                           width: "100%",
+
+                           backgroundColor: "rgba(0, 3, 0, 0.5)",
+                        }}
+                     >
+                        You Already Logged Please <br />
+                        <NavLink to="/place" style={styles.link} exact>
                            Click Here
                         </NavLink>
-                     </div>
-                  </FormGroup>
+                     </p>
+                  </div>
                ) : (
-                  <Card className="rounded-0 mb-0 px-2">
-                     <CardHeader>Login</CardHeader>
+                  <Card body style={styles.content}>
+                     <div className="text-center pb-4">
+                        <Typography variant="h3" style={styles.title}>
+                           Login
+                           <span role="img" aria-label="Burger Emoji">
+                              🍔
+                           </span>
+                        </Typography>
+                     </div>
+                     {/* <img
+                        src={hamBurgerIcon}
+                        alt="hamBurger"
+                        style={styles.hamBurger}
+                     />
+                     <Typography variant="h3" style={styles.title}>
+                        Login
+                     </Typography> */}
                      <CardBody>
                         <Col sm="12">
                            <Form
@@ -131,9 +180,16 @@ class PlaceLogin extends React.Component {
                                     </FormGroup>
                                  </Col>
                                  <Col sm="12">
-                                    <FormGroup>
+                                    <FormGroup
+                                       style={{
+                                          color: "#000",
+                                          width: "60%",
+                                          marginLeft: "20%",
+                                          marginBottom: "10%",
+                                       }}
+                                    >
                                        <GoogleLogin
-                                          className="text-white bg-primary"
+                                          className="text-white bg-secondary"
                                           clientId="613629143448-2rog0gdm4g7p8jdld8duvq8fbbhfol5g.apps.googleusercontent.com"
                                           buttonText="Login with Google"
                                           onSuccess={this.responseSuccessGoogle}
@@ -143,26 +199,47 @@ class PlaceLogin extends React.Component {
                                  </Col>
 
                                  <Col sm="12">
-                                    <FormGroup className="d-flex justify-content-between align-items-center">
+                                    <FormGroup
+                                       style={{
+                                          marginLeft: "50px",
+                                          marginBottom: "10%",
+                                       }}
+                                    >
                                        <FacebookLogin
-                                          className="text-white bg-primary"
                                           appId="689602668422972"
                                           size="small"
+                                          icon="fa-facebook"
                                           callback={this.responseFacebook}
                                        />
                                     </FormGroup>
 
                                     <div className="d-flex justify-content-between">
                                        <Button
-                                          color="primary"
-                                          outline
+                                          style={{
+                                             color: "#000",
+                                             width: "60%",
+
+                                             marginBottom: "10%",
+                                          }}
                                           onClick={() => {
                                              history.push("/register");
                                           }}
+                                          color="secondary"
+                                          variant="contained"
                                        >
                                           Register
                                        </Button>
-                                       <Button color="primary" type="submit">
+                                       <Button
+                                          style={{
+                                             color: "#000",
+                                             width: "60%",
+                                             marginLeft: "20%",
+                                             marginBottom: "10%",
+                                          }}
+                                          color="secondary"
+                                          type="submit"
+                                          variant="contained"
+                                       >
                                           Login
                                        </Button>
                                     </div>

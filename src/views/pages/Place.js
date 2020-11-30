@@ -4,7 +4,6 @@ import {
    CardHeader,
    Card,
    Table,
-   Button,
    Row,
    Col,
    FormGroup,
@@ -15,7 +14,23 @@ import {
 import { connect } from "react-redux";
 import PlaceCart from "./PlaceCart";
 import Paymentb from "./paymentb";
+import backImg from "../../imgs/demo.jpeg";
 
+//material-ui
+import Button from "@material-ui/core/Button";
+const styles = {
+   row: {
+      backgroundImage: `url(${backImg})`,
+      height: "130vh",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+   },
+   content: {
+      height: "90%",
+      color: "white",
+      backgroundColor: "rgba(0, 3, 0, 0.5)",
+   },
+};
 class Place extends React.Component {
    constructor(props) {
       super(props);
@@ -25,6 +40,7 @@ class Place extends React.Component {
          paymentData: {},
       };
    }
+
    cartTotal = (price) => {
       this.setState({ cartPrice: price });
    };
@@ -35,16 +51,20 @@ class Place extends React.Component {
       const { userInfo, paymentData } = this.state;
 
       return (
-         <Row>
+         <Row style={styles.row}>
             <Col md="6" sm="12">
-               <Card>
+               <Card style={styles.content}>
                   <CardHeader>
                      <div className="d-flex justify-content-between">
-                        <CardTitle tag="h2">User Information</CardTitle>
+                        <CardTitle tag="h5">User Information</CardTitle>
                         <div className="d-flex flex-wrap flot-right">
                            <Button
-                              className="add-new-btn"
-                              color="primary"
+                              style={{
+                                 color: "#000",
+                              }}
+                              color="secondary"
+                              type="submit"
+                              variant="contained"
                               onClick={() => this.props.history.push("/")}
                               outline
                            >
@@ -173,6 +193,7 @@ class Place extends React.Component {
 
             <Col md="6" sm="12">
                <PlaceCart
+                  style={styles.content}
                   cartData={this.props.cartItem}
                   cartTotal={this.cartTotal}
                />
@@ -187,7 +208,7 @@ class Place extends React.Component {
                />
             </Col>
             <Col md="6" sm="12">
-               <Table bordered>
+               <Table style={styles.content} responsive bordered>
                   <thead>
                      <tr>
                         <th>Transaction Id</th>

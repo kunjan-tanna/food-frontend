@@ -1,8 +1,6 @@
 import React from "react";
-import logo200Image from "../../imgs/logo.jpg";
 import backImg from "../../imgs/background.jpg";
 import {
-   Button,
    CardHeader,
    CardBody,
    Card,
@@ -20,6 +18,29 @@ import * as registerActions from "../../redux/actions/auth/auth";
 import { toast, ToastContainer } from "react-toastify";
 import { history } from "../../history";
 import "react-toastify/dist/ReactToastify.css";
+//material-ui
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+
+const styles = {
+   header: {
+      backgroundImage: `url(${backImg})`,
+      height: "100vh",
+      justifyContent: "center",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+   },
+
+   content: {
+      height: "100%",
+      width: "100%",
+      color: "white",
+      backgroundColor: "rgba(0, 3, 0, 0.5)",
+   },
+   title: {
+      margin: "40px 0px 10px 0px",
+   },
+};
 
 class Register extends React.Component {
    constructor(props) {
@@ -71,23 +92,9 @@ class Register extends React.Component {
    };
    render() {
       return (
-         <Row
-            style={{
-               height: "100vh",
-               justifyContent: "center",
-               alignItems: "center",
-               backgroundImage: `url(${backImg})`,
-               backgroundRepeat: "no-repeat",
-               backgroundSize: 1500,
-            }}
-         >
+         <Row style={styles.header}>
             <Col md={6} lg={4}>
-               <Card
-                  body
-                  style={{
-                     backgroundColor: "#c1c1c1",
-                  }}
-               >
+               <Card body style={styles.content}>
                   <Form
                      onSubmit={(e) => {
                         e.preventDefault();
@@ -95,13 +102,12 @@ class Register extends React.Component {
                      }}
                   >
                      <div className="text-center pb-4">
-                        <img
-                           src={logo200Image}
-                           className="rounded"
-                           style={{ width: 60, height: 60, cursor: "pointer" }}
-                           alt="logo"
-                           //onClick={onLogoClick}
-                        />
+                        <Typography variant="h3" style={styles.title}>
+                           Register{" "}
+                           <span role="img" aria-label="Pizza Emoji">
+                              🍕
+                           </span>
+                        </Typography>
                      </div>
                      <Row>
                         <Col md="6" sm="12">
@@ -196,7 +202,17 @@ class Register extends React.Component {
                         </Col>
                      </Row>
 
-                     <Button className="bg-dark border-0" block type="submit">
+                     <Button
+                        style={{
+                           color: "#000",
+                           width: "60%",
+                           marginLeft: "20%",
+                           marginBottom: "10%",
+                        }}
+                        color="secondary"
+                        type="submit"
+                        variant="contained"
+                     >
                         Register
                      </Button>
                      <ToastContainer />

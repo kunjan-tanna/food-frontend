@@ -3,7 +3,6 @@ import {
    Card,
    Col,
    Row,
-   Button,
    CardHeader,
    CardTitle,
    CardBody,
@@ -14,6 +13,8 @@ import {
    Input,
 } from "reactstrap";
 import { connect } from "react-redux";
+//material-ui
+import Button from "@material-ui/core/Button";
 
 class ExtraItem extends React.Component {
    constructor(props) {
@@ -51,15 +52,15 @@ class ExtraItem extends React.Component {
 
    render() {
       const { addItem } = this.state;
-      const { addExtraItem } = this.props;
+      const { addExtraItem, style, styleTable } = this.props;
       return (
          <Row>
             <Col sm="12">
                <Card>
-                  <CardHeader>Combo Items</CardHeader>
+                  <CardHeader style={style}>Combo Items</CardHeader>
                   <CardBody className="pt-2">
                      <Col sm="12">
-                        <Table size="md" responsive bordered>
+                        <Table size="md" responsive bordered style={styleTable}>
                            <thead>
                               <tr>
                                  <th>Product Name</th>
@@ -124,9 +125,12 @@ class ExtraItem extends React.Component {
                                     <td>
                                        <div className="d-flex justify-content-between">
                                           <Button
-                                             className="mr-1"
-                                             color="primary"
+                                             style={{
+                                                color: "#000",
+                                             }}
+                                             color="secondary"
                                              type="submit"
+                                             variant="contained"
                                              onClick={() => this.handleClick()}
                                           >
                                              Add To Cart

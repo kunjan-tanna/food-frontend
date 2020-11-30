@@ -12,10 +12,14 @@ import {
    ModalHeader,
    ModalBody,
 } from "reactstrap";
-import { Minus, Plus, Trash } from "react-feather";
-import PlaceLogin from "./PlaceLogin";
-import * as globalActions from "../../redux/actions/global";
 
+const styles = {
+   content: {
+      width: "100%",
+      color: "white",
+      backgroundColor: "rgba(0, 3, 0, 0.5)",
+   },
+};
 class PlaceCart extends React.Component {
    constructor(props) {
       super(props);
@@ -39,13 +43,14 @@ class PlaceCart extends React.Component {
    };
 
    render() {
+      const { style } = this.props;
       return (
-         <Card className="mb-4">
+         <Card className="mb-4" style={style}>
             <CardHeader>
                <CardTitle tag="h5">Orders Details</CardTitle>
             </CardHeader>
             <CardBody>
-               <Table bordered>
+               <Table style={styles.content} bordered>
                   <thead>
                      <tr>
                         <th>Product Name</th>
@@ -72,7 +77,11 @@ class PlaceCart extends React.Component {
             <div className="invoice-total-table">
                <Row>
                   <Col sm="12">
-                     <Table responsive borderless>
+                     <Table
+                        style={{ color: "white", paddingTop: "10px" }}
+                        responsive
+                        borderless
+                     >
                         <tbody>
                            <tr>
                               <th className="text-right">Total</th>

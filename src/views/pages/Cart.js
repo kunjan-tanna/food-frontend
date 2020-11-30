@@ -3,7 +3,6 @@ import {
    CardBody,
    CardHeader,
    Card,
-   Button,
    Row,
    Col,
    Table,
@@ -14,8 +13,27 @@ import {
 } from "reactstrap";
 import { Minus, Plus, Trash } from "react-feather";
 import PlaceLogin from "./PlaceLogin";
+import { Redirect } from "react-router-dom";
 import * as globalActions from "../../redux/actions/global";
+import backImg from "../../imgs/punjabi_bg.jpg";
 
+//material-ui
+import Button from "@material-ui/core/Button";
+
+const styles = {
+   img: {
+      backgroundImage: `url(${backImg})`,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+   },
+   content: {
+      color: "white",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+   },
+   button: {
+      color: "#000",
+   },
+};
 class Cart extends React.Component {
    constructor(props) {
       super(props);
@@ -24,7 +42,6 @@ class Cart extends React.Component {
          prevPrice: 0,
          price: 0,
          total: 0,
-
          updateData: [],
          showLeadModal: false,
       };
@@ -128,13 +145,16 @@ class Cart extends React.Component {
       let total1 =
          price &&
          price.reduce((totalitem, item) => +totalitem + +item.price, 0);
+      const { styleTable } = this.props;
       return (
-         <Card>
+         <Card style={styles.img}>
             <CardHeader>
-               <CardTitle tag="h5">Orders</CardTitle>
+               <CardTitle tag="h5" style={styles.content}>
+                  Orders
+               </CardTitle>
             </CardHeader>
             <CardBody>
-               <Table bordered>
+               <Table bordered responsive style={styleTable}>
                   <thead>
                      <tr>
                         <th>Remove</th>
@@ -153,9 +173,10 @@ class Cart extends React.Component {
                                    <td>
                                       <div className="d-flex justify-content-start">
                                          <Button
-                                            className="mr-1"
-                                            color="primary"
+                                            style={styles.button}
+                                            color="secondary"
                                             type="submit"
+                                            variant="contained"
                                             onClick={(e) => this.handleDel(i)}
                                          >
                                             <Trash size={15} />
@@ -168,17 +189,19 @@ class Cart extends React.Component {
                                    <td>
                                       <div className="d-flex justify-content-between">
                                          <Button
-                                            className="mr-1"
-                                            color="primary"
+                                            style={styles.button}
+                                            color="secondary"
                                             type="submit"
+                                            variant="contained"
                                             onClick={() => this.handleDec(i)}
                                          >
                                             <Minus size={15} />
                                          </Button>
                                          <Button
-                                            className="mr-1"
-                                            color="primary"
+                                            style={styles.button}
+                                            color="secondary"
                                             type="submit"
+                                            variant="contained"
                                             onClick={() =>
                                                this.handleInc(i, index)
                                             }
@@ -200,10 +223,18 @@ class Cart extends React.Component {
                      <Table responsive borderless>
                         <tbody>
                            <tr>
-                              <th className="text-right">Total</th>
+                              <th
+                                 className="text-right"
+                                 style={{ color: "white" }}
+                              >
+                                 Total
+                              </th>
                            </tr>
                            <tr>
-                              <td className="text-right">
+                              <td
+                                 className="text-right"
+                                 style={{ color: "white" }}
+                              >
                                  {this.state.total ? this.state.total : total1}
                               </td>
                            </tr>
@@ -212,18 +243,20 @@ class Cart extends React.Component {
                               <td>
                                  <div className="d-flex justify-content-between">
                                     <Button
-                                       className="mr-1"
-                                       color="primary"
+                                       style={styles.button}
+                                       color="secondary"
                                        type="submit"
+                                       variant="contained"
                                        onClick={() => this.handleRemove()}
                                     >
                                        Remove All
                                     </Button>
                                     {this.state.cart.length > 0 ? (
                                        <Button
-                                          className="mr-1"
-                                          color="primary"
+                                          style={styles.button}
+                                          color="secondary"
                                           type="submit"
+                                          variant="contained"
                                           onClick={() => this.toggleModal()}
                                        >
                                           Place Order
@@ -249,7 +282,7 @@ class Cart extends React.Component {
                   Welcome back, please login to your account
                </ModalHeader>
                <ModalBody>
-                  <PlaceLogin />
+                  <Redirect to="/login" />
                </ModalBody>
             </Modal>
          </Card>
