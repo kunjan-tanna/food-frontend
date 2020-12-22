@@ -51,6 +51,7 @@ class Paymentb extends React.Component {
                   amount: resData.transaction.amount,
                };
                this.props.data(obj);
+               this.props.timer();
             });
       });
    };

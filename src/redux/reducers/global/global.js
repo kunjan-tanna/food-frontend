@@ -1,5 +1,3 @@
-import { act } from "react-dom/test-utils";
-
 export const initialState = {
    banquets: [],
    data: [],
@@ -14,16 +12,20 @@ const global = (state = initialState, action) => {
          return Object.assign({}, state, { banquets: action.payload });
       case "EX_PRODUCT":
          return Object.assign({}, state, { data: action.payload });
-      case "DEL_ITEM":
-         return { data: [] };
+
       case "DEL_PAR_ITEM":
-         return {
+         return Object.assign({}, state, {
             data: [...state.data.filter((item) => item !== action.payload)],
-         };
+         });
+
       case "LOGIN_WITH_JWT":
          return Object.assign({}, state, {
             userInfo: action.payload.userInfo,
             accessToken: action.payload.accessToken,
+         });
+      case "DEL_ITEM":
+         return Object.assign({}, state, {
+            data: [],
          });
       case "LOGOUT":
          return initialState;

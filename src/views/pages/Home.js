@@ -133,15 +133,18 @@ class Home extends React.Component {
    };
    /*On load screen to show nearBy location*/
    componentDidMount = () => {
+      this.setState({ loading: true });
       this.props.dispatch(globalActions.getBanquet()).then((res) => {
          let rowData = res.data;
          this.setState({ rowData });
       });
+
       this.getLocation();
    };
 
    render() {
       const { classes } = this.props;
+
       const final =
          this.state.data &&
          this.state.data.map((item) => {

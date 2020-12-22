@@ -6,13 +6,13 @@ import {
    Row,
    Col,
    Table,
+   Input,
    CardTitle,
    Modal,
    ModalHeader,
    ModalBody,
 } from "reactstrap";
 import { Minus, Plus, Trash } from "react-feather";
-import PlaceLogin from "./PlaceLogin";
 import { Redirect } from "react-router-dom";
 import * as globalActions from "../../redux/actions/global";
 import backImg from "../../imgs/punjabi_bg.jpg";
@@ -39,7 +39,9 @@ class Cart extends React.Component {
       super(props);
       this.state = {
          cart: this.props.addItem1,
+         IncPrice: 0,
          prevPrice: 0,
+         quantity: 1,
          price: 0,
          total: 0,
          updateData: [],
@@ -47,75 +49,96 @@ class Cart extends React.Component {
       };
    }
    /*Handle the Increment Quantity*/
-   handleInc = (i, index) => {
-      let obj = {
-         productId: i._id,
-         quantity: i.quantity,
-         price: i.price,
-      };
-      this.props
-         .dispatch(globalActions.getIncProduct(i._id, obj))
-         .then((res) => {
-            let data1 = res.data;
-            this.state.cart.map((item, index) => {
-               if (item._id === data1._id) {
-                  this.state.cart.splice(index, 1, data1);
-                  let cart = this.state.cart;
-                  let total = cart.reduce(
-                     (totalitem, item) => +totalitem + +item.price,
-                     0
-                  );
-                  this.setState({ total });
-                  this.setState({ cart });
-               }
+   handleInc = (i) => {
+      this.setState(
+         (prevState) => {
+            if (prevState.quantity < 9) {
+               return {
+                  quantity: prevState.quantity + 1,
+               };
+            }
+         },
+         () => {
+            const quan = this.state.quantity;
+            this.setState({ IncPrice: i.price }, () => {
+               const priceData = i.price * quan;
+               const cartData = {
+                  _id: i._id,
+                  price: priceData,
+                  quantity: quan,
+                  productName: i.productName,
+                  categoryName: i.categoryName,
+               };
+               this.state.cart.map((item, index) => {
+                  if (item._id === cartData._id) {
+                     this.state.cart.splice(index, 1, cartData);
+                     let cart = this.state.cart;
+                     let total = cart.reduce(
+                        (totalitem, item) => +totalitem + +item.price,
+                        0
+                     );
+                     this.setState({ total });
+                     this.props.dispatch(globalActions.saveData(cart));
+                     this.setState({ cart });
+                  }
+               });
             });
-         });
+         }
+      );
    };
    /*Handle the Decrement Quantity*/
    handleDec = (item) => {
       this.setState(
          (prevState) => {
-            return {
-               price: item.price,
-               prevPrice: prevState.price,
-            };
+            if (prevState.quantity > 0) {
+               return {
+                  quantity: prevState.quantity - 1,
+               };
+            }
          },
          () => {
-            let obj = {
-               productId: item._id,
-               quantity: item.quantity,
-               price: this.state.price,
-            };
-            this.props
-               .dispatch(globalActions.getDecProduct(item._id, obj))
-               .then((res) => {
-                  let data1 = res.data;
-                  data1.price = this.state.prevPrice;
-
+            this.setState(
+               (prevState) => {
+                  return {
+                     IncPrice: item.price - prevState.IncPrice,
+                  };
+               },
+               () => {
+                  const priceData = this.state.IncPrice;
+                  const cartData = {
+                     _id: item._id,
+                     price: priceData,
+                     quantity: this.state.quantity,
+                     productName: item.productName,
+                     categoryName: item.categoryName,
+                  };
                   this.state.cart.map((item, index) => {
-                     if (item._id === data1._id) {
-                        this.state.cart.splice(index, 1, data1);
+                     if (item._id === cartData._id) {
+                        this.state.cart.splice(index, 1, cartData);
                         let cart = this.state.cart;
                         let total = cart.reduce(
                            (totalitem, item) => +totalitem + +item.price,
                            0
                         );
                         this.setState({ total });
+                        this.props.dispatch(globalActions.saveData(cart));
                         this.setState({ cart });
                      }
                   });
-               });
+               }
+            );
          }
       );
    };
    /*Remove the particular Item*/
    handleDel = (item) => {
-      this.props.dispatch(globalActions.removeParticularItem(item));
+      this.props.removeItem(item);
       window.location.reload();
    };
    /*Remove the all the item*/
    handleRemove = () => {
-      this.props.removeItem();
+      this.props.removeall();
+      window.location.reload();
    };
    /*Open the Pop-Up Box for combo*/
    toggleModal = () => {
@@ -135,11 +158,20 @@ class Cart extends React.Component {
    onExited = () => {
       this.setState({ status: "Closed" });
    };
-
    onExiting = () => {
       this.setState({ status: "Closing..." });
    };
+   /*handle the Delivery in OrderIn Tab*/
+   handleDelivery = (e) => {
+      const orderInDel = e.target.value;
 
+      this.props.orderIn(orderInDel);
+   };
+   /*handle the Pick-up in OrderIn Tab*/
+   handlePickup = (e) => {
+      const orderInPick = e.target.value;
+      this.props.orderIn(orderInPick);
+   };
    render() {
       let price = this.state.cart;
       let total1 =
@@ -148,10 +180,39 @@ class Cart extends React.Component {
       const { styleTable } = this.props;
       return (
          <Card style={styles.img}>
-            <CardHeader>
-               <CardTitle tag="h5" style={styles.content}>
-                  Orders
-               </CardTitle>
+            <CardHeader style={styles.content}>
+               <div className="d-flex">
+                  <div className="mr-auto p-2">
+                     <CardTitle tag="h5">Orders</CardTitle>
+                  </div>
+
+                  <div className="mr-4 p-2">
+                     <Input
+                        type="radio"
+                        name="radio"
+                        value="pickup"
+                        checked={
+                           this.props.value == "pickup" ? this.props.value : ""
+                        }
+                        onChange={(e) => this.handlePickup(e)}
+                     />
+                     <label>Pick-Up</label>
+                  </div>
+                  <div className="p-2">
+                     <Input
+                        type="radio"
+                        name="radio"
+                        value="delivery"
+                        checked={
+                           this.props.value == "delivery"
+                              ? this.props.value
+                              : ""
+                        }
+                        onChange={(e) => this.handleDelivery(e)}
+                     />
+                     <label>Delivery</label>
+                  </div>
+               </div>
             </CardHeader>
             <CardBody>
                <Table bordered responsive style={styleTable}>
@@ -184,8 +245,8 @@ class Cart extends React.Component {
                                       </div>
                                    </td>
                                    <td>{i.productName}</td>
-                                   <td> {i.price} &nbsp; INR</td>
-                                   <td> {i.quantity}</td>
+                                   <td>{i.price}&nbsp;INR</td>
+                                   <td>{i.quantity}</td>
                                    <td>
                                       <div className="d-flex justify-content-between">
                                          <Button

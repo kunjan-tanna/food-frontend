@@ -140,14 +140,7 @@ class PlaceLogin extends React.Component {
                            </span>
                         </Typography>
                      </div>
-                     {/* <img
-                        src={hamBurgerIcon}
-                        alt="hamBurger"
-                        style={styles.hamBurger}
-                     />
-                     <Typography variant="h3" style={styles.title}>
-                        Login
-                     </Typography> */}
+
                      <CardBody>
                         <Col sm="12">
                            <Form

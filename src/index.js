@@ -7,7 +7,6 @@ import { HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/storeConfig/store";
 import { PersistGate } from "redux-persist/integration/react";
-import Spinner from "../src/util/spinner/spinner";
 
 ReactDOM.render(
    <Provider store={store}>

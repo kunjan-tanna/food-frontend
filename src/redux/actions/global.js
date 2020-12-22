@@ -39,8 +39,10 @@ export const saveData = (data) => async (dispatch) => {
    return data;
 };
 //Remove the product item from localStorage
-export const removeItem = () => async (dispatch) => {
-   return dispatch({ type: "DEL_ITEM" });
+export const removeItem = () => {
+   return (dispatch) => {
+      dispatch({ type: "DEL_ITEM" });
+   };
 };
 //Remove the particular product item from localStorage
 export const removeParticularItem = (data) => async (dispatch) => {
